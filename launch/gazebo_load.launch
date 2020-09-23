@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<launch>
+    
+    <!-- Cargar el modelo del robot -->
+    <arg name="model" default="$(find test_description_rycsv)/urdf/modelo_basico_rycsv.urdf"/>
+
+    <!-- Parse of Model -->
+    <param 
+        name="robot_description" 
+        command="$(find xacro)/xacro $(arg model)"
+    />
+
+    <!-- Robot_state_publisher -->
+    <!-- Publica las transformaciones entre marcos de referencia fijos -->
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="rob_pub" />
+
+    <!-- RViz-->
+    <node pkg="rviz" type="rviz" name="rviz" />
+
+    <!-- ///////////////////////////////////////////////////////////////      -->
+    <!-- Controller Manager -->
+    <!-- Load joint controller configurations from YAML file to parameter server -->
+    <rosparam 
+        file="$(find test_description_rycsv)/config/controller_def.yaml" 
+        command="load"
+    />
+
+    <!-- load the controllers -->
+    <node 
+        name="spawner_ctrols" 
+        pkg="controller_manager" 
+        type="spawner" 
+        respawn="false"
+        output="screen"
+        args="  jnt_st_controller
+                wheel_controller"
+    />
+
+    <!-- ///////////////////////////////////////////////////////////////      -->
+    <!-- Init Gazebo  -->
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="use_sim_time" value="true"/>
+    </include> 
+
+    <!-- Spawn of robot inside Gazebo -->
+    <node 
+        pkg="gazebo_ros" 
+        type="spawn_model" 
+        name="spawn_robot"
+        respawn="false"
+        args="  -param robot_description
+                -urdf
+                -model robot_prueba"
+    />
+
+</launch>

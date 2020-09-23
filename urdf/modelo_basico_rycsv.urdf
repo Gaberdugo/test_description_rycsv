@@ -1,0 +1,201 @@
+<?xml version="1.0"?>
+<robot name="robot_rycsv">
+
+    <!-- Marco de referencia (Eslabon) inercial-->
+    <link name="base_footprint"/>
+
+    <!-- Definicion de la junta entre base_footprint y base_link-->
+    <joint name="fixed_joint" type="fixed">
+        <origin xyz="0.0 0.0 0.15" rpy="0.0 0.0 0.0"/>
+        <parent link="base_footprint"/>
+        <child link="base_link"/>
+    </joint>
+
+    <link name="base_link">
+        <visual>
+            <origin xyz="0.0 0.0 0.0" />
+            <geometry>
+                <cylinder radius="0.5" length="0.2"/>
+            </geometry>
+            <material name="Red">
+                <color rgba="1.0 0.0 0.0 1.0"/>
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0.0 0.0 0.0" />
+            <geometry>
+                <cylinder radius="0.5" length="0.2"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="1.0"/>
+            <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+        </inertial>
+    </link>
+
+    <!-- Definicion de ruedas esfericas de soporte -->
+
+    <joint name="sphere_joint_1" type="fixed">
+        <origin xyz="0.3 0.0 -0.1" rpy="0.0 0.0 0.0"/>
+        <parent link="base_link"/>
+        <child link="sphere_link_1"/>
+    </joint>
+
+    <link name="sphere_link_1">
+        <visual>
+            <origin xyz="0.0 0.0 0.0" />
+            <geometry>
+                <sphere radius="0.05"/>
+            </geometry>
+            <material name="black">
+                <color rgba="0.0 0.0 0.0 1.0"/>
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0.0 0.0 0.0" />
+            <geometry>
+                <sphere radius="0.05"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="1.0"/>
+            <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+        </inertial>
+    </link>
+
+    <joint name="sphere_joint_2" type="fixed">
+        <origin xyz="-0.3 0.0 -0.1" rpy="0.0 0.0 0.0"/>
+        <parent link="base_link"/>
+        <child link="sphere_link_2"/>
+    </joint>
+
+    <link name="sphere_link_2">
+        <visual>
+            <origin xyz="0.0 0.0 0.0" />
+            <geometry>
+                <sphere radius="0.05"/>
+            </geometry>
+            <material name="black">
+                <color rgba="0.0 0.0 0.0 1.0"/>
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0.0 0.0 0.0" />
+            <geometry>
+                <sphere radius="0.05"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="1.0"/>
+            <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+        </inertial>
+    </link>
+
+    <joint name="sphere_joint_3" type="fixed">
+        <origin xyz="0.0 0.3 -0.1" rpy="0.0 0.0 0.0"/>
+        <parent link="base_link"/>
+        <child link="sphere_link_3"/>
+    </joint>
+
+    <link name="sphere_link_3">
+        <visual>
+            <origin xyz="0.0 0.0 0.0" />
+            <geometry>
+                <sphere radius="0.05"/>
+            </geometry>
+            <material name="black">
+                <color rgba="0.0 0.0 0.0 1.0"/>
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0.0 0.0 0.0" />
+            <geometry>
+                <sphere radius="0.05"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="1.0"/>
+            <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+        </inertial>
+    </link>
+
+    <joint name="sphere_joint_4" type="fixed">
+        <origin xyz="0.0 -0.3 -0.1" rpy="0.0 0.0 0.0"/>
+        <parent link="base_link"/>
+        <child link="sphere_link_4"/>
+    </joint>
+
+    <link name="sphere_link_4">
+        <visual>
+            <origin xyz="0.0 0.0 0.0" />
+            <geometry>
+                <sphere radius="0.05"/>
+            </geometry>
+            <material name="black">
+                <color rgba="0.0 0.0 0.0 1.0"/>
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0.0 0.0 0.0" />
+            <geometry>
+                <sphere radius="0.05"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="1.0"/>
+            <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+        </inertial>
+    </link>
+
+    <!-- Rueda motorizada -->
+
+    <joint name="joint_wheel" type="continuous">
+        <origin xyz="0.0 0.0 -0.1" rpy="$(eval -pi/2) 0.0 0.0"/>
+        <parent link="base_link"/>
+        <child link="wheel_motor"/>
+        <axis xyz="0.0 0.0 1.0"/>
+        <limit effort="10" velocity="6.0"/>
+    </joint>
+
+    <link name="wheel_motor">
+        <visual name="">
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <cylinder radius="0.05" length="0.05"/>
+            </geometry>
+            <material name="blue">
+                <color rgba="0.0 0.0 1.0 1.0"/>
+                <texture filename=""/>
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <sphere radius="0.06"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="1.0"/>
+            <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+        </inertial>
+    </link>
+
+    <transmission name="tranmission_1">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="joint_wheel">
+            <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="motor1">
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+
+    <!-- Gazebo ROS Plugin-->
+    <!-- Plugin para que Gazebo pueda entender los controladores-->
+    <gazebo>
+        <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+            <robotNamespace>/</robotNamespace>
+        </plugin>
+    </gazebo>
+
+</robot>
